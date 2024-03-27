@@ -47,7 +47,7 @@ func main() {
 	defer objs.Close()
 
 	attr := unix.PerfEventAttr{
-		Type:   unix.PERF_TYPE_HARDWARE,
+		Type:   unix.PERF_TYPE_SOFTWARE,
 		Size:   uint32(unsafe.Sizeof(unix.PerfEventAttr{})),
 		Config: uint64(unix.PERF_COUNT_HW_CPU_CYCLES),
 		Sample: freq,
