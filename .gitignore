@@ -20,3 +20,4 @@ examples/taskiter/taskiter
 examples/lsm/lsm
 examples/ksyscall/ksyscall
 examples/ksyscall-new/ksyscall-new
+examples/bindsnoop/bindsnoop

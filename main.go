@@ -1,12 +1,26 @@
 package main
 
 import (
-	th "ebpf-go-bootstrap/src/trace-helper"
-	"fmt"
+	"log/slog"
+	"os"
 )
 
+var opts = slog.HandlerOptions{
+	AddSource: false,
+	Level:     slog.LevelDebug,
+}
+
 func main() {
-	fmt.Println("Hello, World!")
-	ks := th.NewKSyms()
-	fmt.Println(ks)
+
+	slog.Debug("debug before setting")
+	slog.Info("info before setting")
+
+	slog.SetDefault(slog.New(slog.NewTextHandler(os.Stdout, &opts)))
+	slog.Debug("debug after setting")
+	slog.Info("info after setting")
+
+	opts.Level = slog.LevelInfo
+	slog.SetDefault(slog.New(slog.NewTextHandler(os.Stdout, &opts)))
+	slog.Debug("debug after setting Level to Info")
+	slog.Info("info after setting Level to Info")
 }
