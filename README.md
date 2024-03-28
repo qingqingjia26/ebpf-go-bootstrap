@@ -35,8 +35,6 @@ go generate . && go build . && sudo ./${The program you are interested in}
 - [x] Add lsm (libbpf-bootstrap)
 - [x] Add ksyscall (libbpf-bootstrap)
 ## libbpf-tools of bcc
-- [ ] Add xdp (libbpf-tools of bcc)
-- [ ] Add bashreadline (libbpf-tools of bcc)
 - [ ] Add bindsnoop  (libbpf-tools of bcc)
 - [ ] Add biolatency  (libbpf-tools of bcc)
 - [ ] Add cpudist (libbpf-tools of bcc)
