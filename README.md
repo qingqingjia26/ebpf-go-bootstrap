@@ -22,7 +22,7 @@ go generate . && go build . && sudo ./${The program you are interested in}
 # TODO List
 - [x] Verify that the trace helper module is correct
 ## libbpf-bootstrap
-- [x] Add minimal, minimal_ns, minimal_Legacy (libbpf-bootstrap).　**only provide minimal_ns and minimal_Legacy**, *as bpf2go does not support .bss data section handling*
+- [x] Add minimal, minimal_ns, minimal_Legacy (libbpf-bootstrap).
 - [x] Add bootstrap (libbpf-bootstrap)
 - [ ] Add uprobe (libbpf-bootstrap).　**Task cancelled** *because ebpf-go lacks an equivalent Uprobe feature found in libbpf-bootstrap. Nevertheless, similar functionality can be achieved with link.OpenExecutable and Executable.Uprobe as demonstrated in the uretprobe example of the ebpf-go library*
 - [ ] Add usdt (libbpf-bootstrap). 　**Task cancelled** *as ebpf-go currently doesn't support USDT. A list of all supported eBPF program types can be found at https://ebpf-go.dev/concepts/section-naming/#program-sections*
@@ -36,7 +36,6 @@ go generate . && go build . && sudo ./${The program you are interested in}
 - [x] Add ksyscall (libbpf-bootstrap)
 ## libbpf-tools of bcc
 - [ ] Add bindsnoop  (libbpf-tools of bcc)
-- [ ] Add biolatency  (libbpf-tools of bcc)
 - [ ] Add cpudist (libbpf-tools of bcc)
 - [ ] Add cpufreq (libbpf-tools of bcc)
 - [ ] Add execsnoop (libbpf-tools of bcc)
