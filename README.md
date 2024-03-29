@@ -39,25 +39,10 @@ go generate . && go build . && sudo ./${The program you are interested in}
 - [ ] Add cpudist (libbpf-tools of bcc)
 - [ ] Add cpufreq (libbpf-tools of bcc)
 - [x] Add execsnoop (libbpf-tools of bcc)
-- [ ] Add exitsnoop (libbpf-tools of bcc)
-- [ ] Add funclatency (libbpf-tools of bcc)
-- [ ] Add gethostlatency (libbpf-tools of bcc)
+- [x] Add exitsnoop (libbpf-tools of bcc)
 - [ ] Add ksnoop (libbpf-tools of bcc)
-- [ ] Add llcstat (libbpf-tools of bcc)
-- [ ] Add opensnoop (libbpf-tools of bcc)
-- [ ] Add profile (libbpf-tools of bcc)
-- [ ] Add sigsnoop (libbpf-tools of bcc)
-- [ ] Add solisten (libbpf-tools of bcc)
-- [ ] Add syscount (libbpf-tools of bcc)
-- [ ] Add tcpconnect (libbpf-tools of bcc)
-- [ ] Add tcpconnlat (libbpf-tools of bcc)
-- [ ] Add tcplife (libbpf-tools of bcc)
-- [ ] Add tcpconnlat (libbpf-tools of bcc)
-- [ ] Add tcppktlat (libbpf-tools of bcc)
-- [ ] Add tcprrt (libbpf-tools of bcc)
-- [ ] Add tcpstats (libbpf-tools of bcc)
-- [ ] Add tcptop (libbpf-tools of bcc)
-- [ ] Add tcptracer (libbpf-tools of bcc)
+- [x] Add sigsnoop (libbpf-tools of bcc)
+
 
 [ebpf-go Getting Started]: https://ebpf-go.dev/guides/getting-started/
 [ebpf-go]: https://github.com/cilium/ebpf
