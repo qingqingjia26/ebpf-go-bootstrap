@@ -38,7 +38,7 @@ go generate . && go build . && sudo ./${The program you are interested in}
 - [ ] Add bindsnoop  (libbpf-tools of bcc)
 - [ ] Add cpudist (libbpf-tools of bcc)
 - [ ] Add cpufreq (libbpf-tools of bcc)
-- [ ] Add execsnoop (libbpf-tools of bcc)
+- [x] Add execsnoop (libbpf-tools of bcc)
 - [ ] Add exitsnoop (libbpf-tools of bcc)
 - [ ] Add funclatency (libbpf-tools of bcc)
 - [ ] Add gethostlatency (libbpf-tools of bcc)

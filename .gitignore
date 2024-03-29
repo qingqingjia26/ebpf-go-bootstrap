@@ -22,3 +22,4 @@ examples/ksyscall/ksyscall
 examples/ksyscall-new/ksyscall-new
 examples/bindsnoop/bindsnoop
 examples/minimal/minimal
+examples/execsnoop/execsnoop
