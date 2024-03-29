@@ -43,12 +43,11 @@ func main() {
 	}
 	defer kp.Close()
 
-	// there is no do_unlinkat2 at /proc/kallsyms on ubuntu 22.04
-	// kp2, err := link.Kprobe("do_unlinkat2", objs.DoUnlinkatExit, nil)
-	// if err != nil {
-	// 	log.Fatalf("opening kprobe: %s", err)
-	// }
-	// defer kp2.Close()
+	kp2, err := link.Kprobe("do_sys_open", objs.DoUnlinkatExit, nil)
+	if err != nil {
+		log.Fatalf("opening kprobe: %s", err)
+	}
+	defer kp2.Close()
 
 	log.Println("Waiting for events..")
 
