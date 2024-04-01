@@ -3,6 +3,8 @@ package main
 import (
 	"log/slog"
 	"os"
+
+	"github.com/cilium/ebpf/btf"
 )
 
 var opts = slog.HandlerOptions{
@@ -23,4 +25,6 @@ func main() {
 	slog.SetDefault(slog.New(slog.NewTextHandler(os.Stdout, &opts)))
 	slog.Debug("debug after setting Level to Info")
 	slog.Info("info after setting Level to Info")
+
+	btf.LoadKernelSpec()
 }

@@ -43,6 +43,8 @@ go generate . && go build . && sudo ./${The program you are interested in}
 - [ ] Add ksnoop (libbpf-tools of bcc)
 - [x] Add sigsnoop (libbpf-tools of bcc)
 
+## test
+- [x] Add all-kprobe
 
 [ebpf-go Getting Started]: https://ebpf-go.dev/guides/getting-started/
 [ebpf-go]: https://github.com/cilium/ebpf

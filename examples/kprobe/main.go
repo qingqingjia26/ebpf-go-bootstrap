@@ -43,7 +43,7 @@ func main() {
 	}
 	defer kp.Close()
 
-	kp2, err := link.Kprobe("do_sys_open", objs.DoUnlinkatExit, nil)
+	kp2, err := link.Kprobe("do_unlinkat", objs.DoUnlinkatExit, nil)
 	if err != nil {
 		log.Fatalf("opening kprobe: %s", err)
 	}

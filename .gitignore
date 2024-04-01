@@ -1,6 +1,6 @@
 *.o
 *.bin
-
+ebpf
 bpf_bpfel.go
 bpf_bpfeb.go
 bpf_x86_bpfel.go
@@ -24,3 +24,4 @@ examples/bindsnoop/bindsnoop
 examples/minimal/minimal
 examples/execsnoop/execsnoop
 examples/exitsnoop/exitsnoop
+examples/allkprobe/allkprobe
