@@ -36,11 +36,8 @@ go generate . && go build . && sudo ./${The program you are interested in}
 - [x] Add ksyscall (libbpf-bootstrap)
 ## libbpf-tools of bcc
 - [ ] Add bindsnoop  (libbpf-tools of bcc)
-- [ ] Add cpudist (libbpf-tools of bcc)
-- [ ] Add cpufreq (libbpf-tools of bcc)
 - [x] Add execsnoop (libbpf-tools of bcc)
 - [x] Add exitsnoop (libbpf-tools of bcc)
-- [ ] Add ksnoop (libbpf-tools of bcc)
 - [x] Add sigsnoop (libbpf-tools of bcc)
 
 ## test
