@@ -43,6 +43,9 @@ go generate . && go build . && sudo ./${The program you are interested in}
 ## test
 - [x] Add all-kprobe
 
+## my interest
+- [ ] Print the killed process name 
+
 [ebpf-go Getting Started]: https://ebpf-go.dev/guides/getting-started/
 [ebpf-go]: https://github.com/cilium/ebpf
 [libbpf-bootstrap]: https://github.com/libbpf/libbpf-bootstrap
