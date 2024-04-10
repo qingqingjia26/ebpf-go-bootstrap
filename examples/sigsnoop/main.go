@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"ebpf-go-bootstrap/src/convert"
 	"encoding/binary"
 	"errors"
 	"flag"
@@ -10,6 +11,7 @@ import (
 	"log/slog"
 	"os"
 	"os/signal"
+	"os/user"
 	"syscall"
 
 	"github.com/cilium/ebpf/link"
@@ -25,14 +27,20 @@ var traceOnlySyscall bool
 var targetPid int
 var targetSigNum int
 
+var opts = slog.HandlerOptions{
+	AddSource: true,
+	Level:     slog.LevelDebug,
+}
+
 func parseCmd() {
 	flag.BoolVar(&traceFail, "x", false, "Trace failed syscalls")
-	flag.BoolVar(&traceOnlySyscall, "k", false, "Trace signals issued by kill syscall only.")
+	flag.BoolVar(&traceOnlySyscall, "k", true, "Trace signals issued by kill syscall only.")
 	flag.IntVar(&targetPid, "p", 0, "Filter by PID")
 	flag.IntVar(&targetSigNum, "s", 0, "Filter by signal number")
 
 	flag.Parse()
 	slog.Info("show parameter", "traceFail", traceFail, "traceOnlySyscall", traceOnlySyscall, "targetPid", targetPid, "targetSigNum", targetSigNum)
+	slog.SetDefault(slog.New(slog.NewTextHandler(os.Stdout, &opts)))
 }
 
 func main() {
@@ -66,35 +74,35 @@ func main() {
 	if traceOnlySyscall {
 		tp, err := link.Tracepoint("syscalls", "sys_exit_tgkill", objs.TgkillExit, nil)
 		if err != nil {
-			log.Fatalf("failed to link tracepoint: %v", err)
+			slog.Error("failed to link tracepoint", "err", err)
 		}
 		defer tp.Close()
 		tp, err = link.Tracepoint("syscalls", "sys_exit_kill", objs.KillExit, nil)
 		if err != nil {
-			log.Fatalf("failed to link tracepoint: %v", err)
+			slog.Error("failed to link tracepoint", "err", err)
 		}
 		defer tp.Close()
 
-		tp, err = link.Tracepoint("syscalls", "sys_exit_tkill", objs.TkillEntry, nil)
+		tp, err = link.Tracepoint("syscalls", "sys_exit_tkill", objs.TkillExit, nil)
 		if err != nil {
-			log.Fatalf("failed to link tracepoint: %v", err)
+			slog.Error("failed to link tracepoint", "err", err)
 		}
 		defer tp.Close()
 
-		tp, err = link.Tracepoint("syscalls", "sys_entry_tgkill", objs.TgkillEntry, nil)
+		tp, err = link.Tracepoint("syscalls", "sys_enter_tgkill", objs.TgkillEntry, nil)
 		if err != nil {
-			log.Fatalf("failed to link tracepoint: %v", err)
+			slog.Error("failed to link tracepoint", "err", err)
 		}
 		defer tp.Close()
-		tp, err = link.Tracepoint("syscalls", "sys_entry_kill", objs.KillEntry, nil)
+		tp, err = link.Tracepoint("syscalls", "sys_enter_kill", objs.KillEntry, nil)
 		if err != nil {
-			log.Fatalf("failed to link tracepoint: %v", err)
+			slog.Error("failed to link tracepoint", "err", err)
 		}
 		defer tp.Close()
 
-		tp, err = link.Tracepoint("syscalls", "sys_entry_tkill", objs.TkillExit, nil)
+		tp, err = link.Tracepoint("syscalls", "sys_enter_tkill", objs.TkillEntry, nil)
 		if err != nil {
-			log.Fatalf("failed to link tracepoint: %v", err)
+			slog.Error("failed to link tracepoint", "err", err)
 		}
 		defer tp.Close()
 
@@ -134,6 +142,11 @@ func main() {
 			slog.Error("failed to decode event", "err", err)
 			continue
 		}
-		fmt.Println(e)
+		if e.Sig == 9 {
+			userInfo, _ := user.LookupId(fmt.Sprintf("%d", e.Uid))
+
+			fmt.Printf("pid: %d, tid:%d user:%s comm:%s killed_id:%d uid:%d gid:%d, signal: %d\n",
+				e.Pid, e.Tid, userInfo.Username, convert.Int8Slice2String(e.Comm[:]), e.KilledId, e.Uid, e.Gid, e.Sig)
+		}
 	}
 }

@@ -25,4 +25,5 @@ examples/minimal/minimal
 examples/execsnoop/execsnoop
 examples/exitsnoop/exitsnoop
 examples/allkprobe/allkprobe
+examples/sigsnoop/sigsnoop
 examples/cpufreq/cpufreq
