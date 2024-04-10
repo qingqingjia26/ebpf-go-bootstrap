@@ -38,7 +38,7 @@ go generate . && go build . && sudo ./${The program you are interested in}
 - [x] Add bindsnoop  (libbpf-tools of bcc)
 - [x] Add execsnoop (libbpf-tools of bcc)
 - [x] Add exitsnoop (libbpf-tools of bcc)
-- [x] Add sigsnoop (libbpf-tools of bcc)
+- [x] Add sigsnoop (libbpf-tools of bcc).  Print signal information along with the name of the process that invoked the kill
 
 ## test
 - [x] Add all-kprobe
