@@ -44,6 +44,7 @@ go generate . && go build . && sudo ./${The program you are interested in}
 - [x] Add all-kprobe
 
 ## my interest
+- [x] new task snoop.   (The task_newtask function is called by all new processes or threads)
 - [ ] Print the killed process name 
 
 [ebpf-go Getting Started]: https://ebpf-go.dev/guides/getting-started/
