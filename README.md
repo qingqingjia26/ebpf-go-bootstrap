@@ -45,7 +45,7 @@ go generate . && go build . && sudo ./${The program you are interested in}
 
 ## my interest
 - [x] new task snoop.   (The task_newtask function is called by all new processes or threads)
-- [ ] Print the killed process name 
+- [x] Print the killed process name.  (Implemented in the sigsnoop examples)
 
 [ebpf-go Getting Started]: https://ebpf-go.dev/guides/getting-started/
 [ebpf-go]: https://github.com/cilium/ebpf

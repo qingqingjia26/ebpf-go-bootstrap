@@ -4,6 +4,7 @@
 /* Copyright (c) 2021~2022 Hengqi Chen */
 #include <vmlinux.h>
 #include <bpf_helpers.h>
+#include "bpf_core_read.h"
 
 #define TASK_COMM_LEN	16
 
@@ -16,9 +17,18 @@ struct event {
 	int sig;
 	int ret;
 	char comm[TASK_COMM_LEN];
+	char killed_comm[TASK_COMM_LEN];
 };
 
 struct event *unused __attribute__((unused));
+
+struct task_info {
+	__u32 uid;
+	char comm[TASK_COMM_LEN];
+};
+
+struct task_info *unused2 __attribute__((unused));
+
 
 #define MAX_ENTRIES	10240
 
@@ -28,6 +38,19 @@ const volatile bool failed_only = false;
 
 struct {
 	__uint(type, BPF_MAP_TYPE_HASH);
+	__uint(max_entries, MAX_ENTRIES);
+	__type(key, __u32);
+	__type(value, struct task_info);
+} taskmap SEC(".maps");
+
+struct {
+	__uint(type, BPF_MAP_TYPE_PERF_EVENT_ARRAY);
+	__uint(key_size, sizeof(__u32));
+	__uint(value_size, sizeof(__u32));
+} task_update_events SEC(".maps");
+
+struct {
+	__uint(type, BPF_MAP_TYPE_LRU_HASH);
 	__uint(max_entries, MAX_ENTRIES);
 	__type(key, __u32);
 	__type(value, struct event);
@@ -75,7 +98,7 @@ static int probe_exit(void *ctx, int ret)
 {
 	__u64 pid_tgid = bpf_get_current_pid_tgid();
 	__u32 tid = (__u32)pid_tgid;
-
+	struct task_info *tip = NULL;
 	struct event *eventp;
 
 	eventp = bpf_map_lookup_elem(&values, &tid);
@@ -84,7 +107,12 @@ static int probe_exit(void *ctx, int ret)
 
 	if (failed_only && ret >= 0)
 		goto cleanup;
-
+	tip = bpf_map_lookup_elem(&taskmap, &eventp->killed_id);
+	if (tip) {
+		for(int i=0;i<TASK_COMM_LEN;i++) {
+			eventp->killed_comm[i] = tip->comm[i];
+		}
+	}
 	eventp->ret = ret;
 
 	bpf_perf_event_output(ctx, &events, BPF_F_CURRENT_CPU, eventp, sizeof(*eventp));
@@ -148,6 +176,7 @@ int sig_trace(struct trace_event_raw_signal_generate *ctx)
 	int sig = ctx->sig;
 	__u64 pid_tgid;
 	__u32 pid;
+	struct task_info *tip = NULL;
 
 	if (failed_only && ret == 0)
 		return 0;
@@ -160,13 +189,41 @@ int sig_trace(struct trace_event_raw_signal_generate *ctx)
 	if (filtered_pid && pid != filtered_pid)
 		return 0;
 
+	tip = bpf_map_lookup_elem(&taskmap, &pid);
+	if (tip) {
+		for(int i=0;i<TASK_COMM_LEN;i++) {
+			event.killed_comm[i] = tip->comm[i];
+		}
+	}
+
 	event.pid = pid;
 	event.killed_id = tpid;
 	event.sig = sig;
 	event.ret = ret;
 	bpf_get_current_comm(event.comm, sizeof(event.comm));
+
 	bpf_perf_event_output(ctx, &events, BPF_F_CURRENT_CPU, &event, sizeof(event));
 	return 0;
 }
+
+SEC("tp/task/task_newtask")
+int handle_tp(struct trace_event_raw_task_newtask *ctx)
+{
+    u64 pid_tgid = bpf_get_current_pid_tgid();
+    u32 pid = ctx->pid;
+    u32 uid = bpf_get_current_uid_gid() >> 32;
+	struct task_info ti = {
+		.uid = uid,
+	};
+
+	bpf_core_read_str(&ti.comm, TASK_COMM_LEN, &ctx->comm);
+	bpf_map_update_elem(&taskmap, &pid, &ti, BPF_ANY);
+
+	bpf_perf_event_output(ctx, &task_update_events, BPF_F_CURRENT_CPU, &pid, sizeof(pid));
+	
+    // bpf_printk("New task created with PID %d, UID %d comm:%s ti.comm:%s task_id:%d.\n", pid, uid, ctx->comm,ti.comm, ctx->pid);
+    return 0;
+}
+
 
 char LICENSE[] SEC("license") = "Dual BSD/GPL";
