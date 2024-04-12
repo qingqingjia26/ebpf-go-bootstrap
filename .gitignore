@@ -28,3 +28,5 @@ examples/allkprobe/allkprobe
 examples/sigsnoop/sigsnoop
 examples/cpufreq/cpufreq
 examples/newtask/newtask
+examples/oomkill/oomkill
+examples/exittask/exittask

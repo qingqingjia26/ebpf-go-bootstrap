@@ -39,6 +39,7 @@ go generate . && go build . && sudo ./${The program you are interested in}
 - [x] Add execsnoop (libbpf-tools of bcc)
 - [x] Add exitsnoop (libbpf-tools of bcc)
 - [x] Add sigsnoop (libbpf-tools of bcc).  Print signal information along with the name of the process that invoked the kill
+- [x] Add oomkill (libbpf-tools of bcc)
 
 ## test
 - [x] Add all-kprobe
@@ -46,6 +47,7 @@ go generate . && go build . && sudo ./${The program you are interested in}
 ## my interest
 - [x] new task snoop.   (The task_newtask function is called by all new processes or threads)
 - [x] Print the killed process name.  (Implemented in the sigsnoop examples)
+- [x] exit task snoop.   (All processes or threads will die call do_exit function)
 
 [ebpf-go Getting Started]: https://ebpf-go.dev/guides/getting-started/
 [ebpf-go]: https://github.com/cilium/ebpf
