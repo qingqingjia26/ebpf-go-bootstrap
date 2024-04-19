@@ -42,14 +42,19 @@ go generate . && go build . && sudo ./${The program you are interested in}
 - [x] Add oomkill (libbpf-tools of bcc)
 
 ## xdp-tutorial
-
+- [ ] Add packet parsing same as packet01-parsing
+- [ ] Add packet rewriting same as packet01-rewriting
+- [ ] Add packet redirecting same as packet01-redirecting
+- [ ] Add tracing tcpdump same as tracing04-xdp-tcpdump
 ## test
 - [x] Add all-kprobe
+- [ ] Add pinned map
 
 ## my interest
 - [x] new task snoop.   (The task_newtask function is called by all new processes or threads)
 - [x] Print the killed process name.  (Implemented in the sigsnoop examples)
 - [x] exit task snoop.   (All processes or threads will die call do_exit function)
+- [ ] Add percpu array map example
 
 [ebpf-go Getting Started]: https://ebpf-go.dev/guides/getting-started/
 [ebpf-go]: https://github.com/cilium/ebpf
