@@ -7,6 +7,8 @@ bpf_x86_bpfel.go
 
 ebpf-go-bootstrap
 
+kernmonitor
+
 test/trace-helper/stacktrace-prog/stacktrace-prog
 examples/minimal_ns/minimal_ns
 examples/minimal_legacy/minimal_legacy
