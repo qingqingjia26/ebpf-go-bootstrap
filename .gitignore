@@ -33,3 +33,4 @@ examples/newtask/newtask
 examples/oomkill/oomkill
 examples/exittask/exittask
 xdp-examples/xdp-ebpf-go/xdp-ebpf-go
+xdp-examples/pinning-maps/pinning-maps

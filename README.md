@@ -61,15 +61,19 @@ go generate . && go build . && sudo ./${The program you are interested in}
 - [ ] traffic-pacing-edt
 - [ ] xdp-synproxy
 
+## network
+- [ ] Add Lightweight Tuneling example
+- [ ] Add seg6 example
+
 ## test
 - [x] Add all-kprobe
-- [ ] Add pinned map
+- [x] Add pinned map. (Implemented in the xdp-examples/pinning-maps)
 
 ## my interest
 - [x] new task snoop.   (The task_newtask function is called by all new processes or threads)
 - [x] Print the killed process name.  (Implemented in the sigsnoop examples)
 - [x] exit task snoop.   (All processes or threads will die call do_exit function)
-- [ ] Add percpu array map example
+- [x] Add percpu array map example. (Implemented in the xdp-examples/pinning-maps)
 
 [ebpf-go Getting Started]: https://ebpf-go.dev/guides/getting-started/
 [ebpf-go]: https://github.com/cilium/ebpf
